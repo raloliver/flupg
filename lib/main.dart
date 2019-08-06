@@ -28,6 +28,7 @@ class _HelloYouState extends State<HelloYou> {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle textStyle = Theme.of(context).textTheme.title;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -41,7 +42,8 @@ class _HelloYouState extends State<HelloYou> {
         child: Column(
           children: <Widget>[
             TextField(
-              decoration: InputDecoration(hintText: 'Please, insert your name'),
+              decoration: InputDecoration(
+                  hintText: 'Please, insert your name', labelText: 'Name', labelStyle: textStyle),
               onChanged: (String string) {
                 setState(() {
                   name = string;
