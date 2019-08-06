@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-
-import 'models/todo.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,118 +6,68 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
+      title: 'WYN',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.yellow,
       ),
-      home: HomePage(),
+      home: new HelloYou(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  var items = new List<Item>();
-
-  HomePage() {
-    items = [];
-    // todo.items.add(Item(title: "Item 1", done: false));
-    // todo.items.add(Item(title: "Item 2", done: true));
-    // todo.items.add(Item(title: "Item 3", done: false));
-  }
-
+class HelloYou extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  State<StatefulWidget> createState() => _HelloYouState();
 }
 
-class _HomePageState extends State<HomePage> {
-  TextEditingController newTaskCtrl = TextEditingController();
-
-  void add() {
-    setState(() {
-      widget.items.add(Item(title: newTaskCtrl.text, done: false));
-      newTaskCtrl.text = "";
-      save();
-    });
-  }
-
-  void remove(index) {
-    setState(() {
-      widget.items.removeAt(index);
-      save();
-    });
-  }
-
-  save() async {
-    var prefs = await SharedPreferences.getInstance();
-    await prefs.setString('data', jsonEncode(widget.items));
-  }
-
-  Future loadData() async {
-    var prefs = await SharedPreferences.getInstance();
-    var data = prefs.getString('data');
-    if (data != null) {
-      Iterable decoded = jsonDecode(data);
-      List<Item> result = decoded.map((x) => Item.fromJson(x)).toList();
-      setState(() {
-        widget.items = result;
-      });
-    }
-  }
-
-  _HomePageState() {
-    loadData();
-  }
+class _HelloYouState extends State<HelloYou> {
+  String name = '';
+  final _currencies = ['Reais', 'Dollars', 'Euro'];
+  String _currency = 'Reais';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextFormField(
-          keyboardType: TextInputType.text,
-          controller: newTaskCtrl,
-          decoration: InputDecoration(
-            labelText: "Nova Tarefa",
-            labelStyle: TextStyle(color: Colors.white),
-          ),
-          validator: (value) {
-            if (value.isEmpty) {
-              return "*";
-            }
-          },
+        title: Text(
+          "Bem vindo",
+          style: TextStyle(color: Colors.black),
         ),
+        backgroundColor: Colors.yellowAccent,
       ),
-      body: ListView.builder(
-        itemCount: widget.items.length,
-        itemBuilder: (BuildContext ctxt, int index) {
-          final item = widget.items[index];
-
-          return Dismissible(
-            child: CheckboxListTile(
-              title: Text(item.title ?? ""),
-              onChanged: (bool value) {
+      body: Container(
+        padding: EdgeInsets.all(15.0),
+        child: Column(
+          children: <Widget>[
+            TextField(
+              decoration: InputDecoration(hintText: 'Please, insert your name'),
+              onChanged: (String string) {
                 setState(() {
-                  item.done = value;
-                  save();
+                  name = string;
                 });
               },
-              value: item.done,
             ),
-            key: Key(item.title),
-            onDismissed: (direction) {
-              remove(index);
-            },
-            background: Container(
-              color: Theme.of(context).primaryColorLight,
+            DropdownButton<String>(
+              items: _currencies.map((String value) {
+                return DropdownMenuItem<String>(
+                    value: value, child: Text(value));
+              }).toList(),
+              value: _currency,
+              onChanged: (String value) {
+                _onDropDownChanged(value);
+              },
             ),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: add,
-        child: Icon(Icons.add),
-        backgroundColor: Colors.pink,
+            Text('Hello ' + name + '!')
+          ],
+        ),
       ),
     );
+  }
+
+  _onDropDownChanged(String value) {
+    setState(() {
+      this._currency = value;
+    });
   }
 }
