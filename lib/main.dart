@@ -10,36 +10,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-<<<<<<< HEAD
-      title: 'WYN',
-      theme: ThemeData(
-        primarySwatch: Colors.yellow,
-      ),
-      home: new HelloYou(),
-      debugShowCheckedModeBanner: false,
-=======
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: HomePage(),
->>>>>>> 39ac98944ea87908f97ed9a0e036446b5649840c
     );
   }
 }
 
-<<<<<<< HEAD
-class HelloYou extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _HelloYouState();
-}
-
-class _HelloYouState extends State<HelloYou> {
-  String name = '';
-  final _currencies = ['Reais', 'Dollars', 'Euro'];
-  String _currency = 'Reais';
-=======
 class HomePage extends StatefulWidget {
   var items = new List<Item>();
 
@@ -64,7 +44,6 @@ class _HomePageState extends State<HomePage> {
       save();
     });
   }
->>>>>>> 39ac98944ea87908f97ed9a0e036446b5649840c
 
   void remove(index) {
     setState(() {
@@ -98,40 +77,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-<<<<<<< HEAD
-        title: Text(
-          "Bem vindo",
-          style: TextStyle(color: Colors.black),
-        ),
-        backgroundColor: Colors.yellowAccent,
-      ),
-      body: Container(
-        padding: EdgeInsets.all(15.0),
-        child: Column(
-          children: <Widget>[
-            TextField(
-              decoration: InputDecoration(hintText: 'Please, insert your name'),
-              onChanged: (String string) {
-                setState(() {
-                  name = string;
-                });
-              },
-            ),
-            DropdownButton<String>(
-              items: _currencies.map((String value) {
-                return DropdownMenuItem<String>(
-                    value: value, child: Text(value));
-              }).toList(),
-              value: _currency,
-              onChanged: (String value) {
-                _onDropDownChanged(value);
-              },
-            ),
-            Text('Hello ' + name + '!')
-          ],
-        ),
-      ),
-=======
         title: TextFormField(
           keyboardType: TextInputType.text,
           controller: newTaskCtrl,
@@ -177,13 +122,6 @@ class _HomePageState extends State<HomePage> {
         child: Icon(Icons.add),
         backgroundColor: Colors.pink,
       ),
->>>>>>> 39ac98944ea87908f97ed9a0e036446b5649840c
     );
-  }
-
-  _onDropDownChanged(String value) {
-    setState(() {
-      this._currency = value;
-    });
   }
 }
