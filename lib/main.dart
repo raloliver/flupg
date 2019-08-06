@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,6 +23,8 @@ class HelloYou extends StatefulWidget {
 
 class _HelloYouState extends State<HelloYou> {
   String name = '';
+  final _currencies = ['Reais', 'Dollars', 'Euro'];
+  String _currency = 'Reais';
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +41,21 @@ class _HelloYouState extends State<HelloYou> {
         child: Column(
           children: <Widget>[
             TextField(
-              decoration: InputDecoration(
-                hintText: 'Please, insert your name'
-              ),
+              decoration: InputDecoration(hintText: 'Please, insert your name'),
               onChanged: (String string) {
                 setState(() {
                   name = string;
                 });
+              },
+            ),
+            DropdownButton<String>(
+              items: _currencies.map((String value) {
+                return DropdownMenuItem<String>(
+                    value: value, child: Text(value));
+              }).toList(),
+              value: _currency,
+              onChanged: (String value) {
+                _onDropDownChanged(value);
               },
             ),
             Text('Hello ' + name + '!')
@@ -54,5 +63,11 @@ class _HelloYouState extends State<HelloYou> {
         ),
       ),
     );
+  }
+
+  _onDropDownChanged(String value) {
+    setState(() {
+      this._currency = value;
+    });
   }
 }
