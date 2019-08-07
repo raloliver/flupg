@@ -26,6 +26,8 @@ class _HelloYouState extends State<HelloYou> {
   final _currencies = ['Reais', 'Dollars', 'Euro'];
   String _currency = 'Reais';
 
+  TextEditingController nameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.title;
@@ -42,6 +44,7 @@ class _HelloYouState extends State<HelloYou> {
         child: Column(
           children: <Widget>[
             TextField(
+              controller: nameController,
               decoration: InputDecoration(
                 hintText: 'Please, insert your name',
                 labelText: 'Name',
@@ -50,11 +53,11 @@ class _HelloYouState extends State<HelloYou> {
                   borderRadius: BorderRadius.circular(5.0),
                 ),
               ),
-              onChanged: (String string) {
-                setState(() {
-                  name = string;
-                });
-              },
+              // onChanged: (String string) {
+              //   setState(() {
+              //     name = string;
+              //   });
+              // },
             ),
             DropdownButton<String>(
               items: _currencies.map((String value) {
@@ -66,7 +69,20 @@ class _HelloYouState extends State<HelloYou> {
                 _onDropDownChanged(value);
               },
             ),
-            Text('Hello ' + name + '!')
+            RaisedButton(
+              color: Theme.of(context).buttonColor,
+              textColor: Theme.of(context).primaryColorDark,
+              child: Text(
+                'Say My Name',
+                textScaleFactor: 1.5,
+              ),
+              onPressed: () {
+                setState(() {
+                  name = nameController.text;
+                });
+              },
+            ),
+            Text(name)
           ],
         ),
       ),
