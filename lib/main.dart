@@ -43,7 +43,13 @@ class _HelloYouState extends State<HelloYou> {
           children: <Widget>[
             TextField(
               decoration: InputDecoration(
-                  hintText: 'Please, insert your name', labelText: 'Name', labelStyle: textStyle),
+                hintText: 'Please, insert your name',
+                labelText: 'Name',
+                labelStyle: textStyle,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+              ),
               onChanged: (String string) {
                 setState(() {
                   name = string;
